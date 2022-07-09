@@ -1,4 +1,4 @@
-package com.jessy.zoo.Data
+package com.jessy.zoo.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
