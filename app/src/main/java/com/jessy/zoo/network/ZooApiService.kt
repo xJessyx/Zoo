@@ -21,19 +21,20 @@ private const val BASE_URL = "https://$HOST_NAME/api/$API_VERSION/"
 //private const val HOST_NAME = "drive.google.com"
 //private const val BASE_URL = "https://$HOST_NAME/"
 
-private val client = OkHttpClient.Builder()
-    .addInterceptor(
-        HttpLoggingInterceptor().apply {
-            level =  HttpLoggingInterceptor.Level.BODY
-        }
-    )
-    .build()
 private val moshi = Moshi.Builder()
     .addLast(KotlinJsonAdapterFactory())
     .build()
 
+private val client = OkHttpClient.Builder()
+    .addInterceptor(
+        HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+    )
+    .build()
+
 private val retrofit = Retrofit.Builder()
-    .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(BASE_URL)
     .client(client)
     .build()
@@ -46,16 +47,17 @@ interface ZooApiService {
 //    @GET("dataset/a3e2b221-75e0-45c1-8f97-75acbd43d613?scope=resourceAquire")
 //    suspend fun getAnimal(): AnimalResult
 
-  //  @GET("file/d/105LWiz9tF7DMq0T137eWv3ZnSHR1Ojz9/view?usp=sharing")
-  //  suspend fun getZoo(
-       // @Query("usp") usp: String? = null
-  //  ): ZooResult
+    //  @GET("file/d/105LWiz9tF7DMq0T137eWv3ZnSHR1Ojz9/view?usp=sharing")
+    //  suspend fun getZoo(
+    // @Query("usp") usp: String? = null
+    //  ): ZooResult
 
 //    fun getZoo(
 //    ): Call<String>
 }
+
 object ZooApi {
-    val retrofitService : ZooApiService by lazy {
+    val retrofitService: ZooApiService by lazy {
         retrofit.create(ZooApiService::class.java)
     }
 

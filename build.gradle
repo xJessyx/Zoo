@@ -3,6 +3,10 @@
 
 buildscript {
 
+    ext {
+        version_room = '2.5.0-alpha01'
+    }
+
     dependencies {
 
         classpath "com.android.tools.build:gradle:7.0.4"

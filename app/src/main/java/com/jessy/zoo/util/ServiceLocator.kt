@@ -18,11 +18,11 @@ object ServiceLocator {
         synchronized(this) {
             return publisherRepository
                 ?: publisherRepository
-                ?: createStylishRepository(context)
+                ?: createPublisherRepository(context)
         }
     }
 
-    private fun createStylishRepository(context: Context): PublisherRepository {
+    private fun createPublisherRepository(context: Context): PublisherRepository {
         return DefaultPublisherRepository(
             PublisherRemoteDataSource,
             createLocalDataSource(context)

@@ -13,22 +13,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.jessy.zoo.R
-import com.jessy.zoo.data.ZooResult
 import com.jessy.zoo.databinding.FragmentHomeBinding
 import com.jessy.zoo.ext.getVmFactory
-import com.jessy.zoo.network.ZooApi
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import androidx.lifecycle.Observer
+
 
 class HomeFragment : Fragment(){
-//    private val viewModel: HomeViewModel by lazy {
-//        ViewModelProvider(this).get(HomeViewModel::class.java)
-//    }
 
     private val viewModel by viewModels<HomeViewModel> { getVmFactory() }
-    @SuppressLint("SimpleDateFormat", "NotifyDataSetChanged")
-private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,30 +32,27 @@ private lateinit var binding: FragmentHomeBinding
             inflater, R.layout.fragment_home, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner= this
+        val adapter = HomeAdapter(HomeAdapter.OnClickListener {
+            viewModel.dispalyPavilionDetail(it)
+        })
+        binding.recyclerHome.adapter = adapter
 
-        binding.button2.setOnClickListener {
-            this.findNavController()
-                .navigate(HomeFragmentDirections.actionHomeFragmentToIntroductionFragment())
+        viewModel.discountsList.observe(
+            viewLifecycleOwner,
+            Observer {
+                it?.let {
+//                    adapter.submitList(it.discounts)
+                }
+            }
+        )
 
-//            ZooApi.retrofitService.getZoo().enqueue(object : Callback<String> {
-//                override fun onResponse(
-//                    call: Call<String>,
-//                    response: Response<String>
-//                ) {
-//                    Log.d(TAG, "response: ${response.body().toString()}")
-//                }
-//                override fun onFailure(call: Call<String>, t: Throwable) {
-//                    Log.d(TAG, "error: ${t.message}" ?: "Get some error")
-//                }
-//            })
-
-        }
+//        binding.button2.setOnClickListener {
+//            this.findNavController()
+//                .navigate(HomeFragmentDirections.actionHomeFragmentToIntroductionFragment())
+//
+//        }
         return binding.root
     }
 
 }
-
-//private fun Any.enqueue(any: Any) {
-//
-//}
 

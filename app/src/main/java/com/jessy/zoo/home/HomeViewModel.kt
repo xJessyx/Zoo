@@ -1,6 +1,8 @@
 package com.jessy.zoo.home
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +15,7 @@ import com.jessy.zoo.util.Util.getString
 import kotlinx.coroutines.*
 
 
-class HomeViewModel(private val publisherRepository: PublisherRepository) : ViewModel() {
+class HomeViewModel(private val publisherRepository: PublisherRepository): ViewModel(){
 
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
@@ -41,6 +43,10 @@ class HomeViewModel(private val publisherRepository: PublisherRepository) : View
     val refreshStatus: LiveData<Boolean>
         get() = _refreshStatus
 
+    private val _navigateToSelectedProperty = MutableLiveData<DataAll>()
+    val navigateToSelectedProperty: MutableLiveData<DataAll>
+        get() = _navigateToSelectedProperty
+
     init {
         getZoo()
         // getAnimal()
@@ -51,43 +57,47 @@ class HomeViewModel(private val publisherRepository: PublisherRepository) : View
 
             if (isInitial) _status.value = LoadApiStatus.LOADING
 //            var listResult = ZooApi.retrofitService.getZoo()
-
             val discountsResult = publisherRepository.getZoo()
-
-
-            Log.v("result", "${discountsResult.toString()}")
-            Log.v("result", "${discountsResult}")
-
+            Log.v("result_discountsResult", "${discountsResult.toString()}")
 //            Log.v("result", "${discountsResult.error}")
-            Log.v("result", "${LoadApiStatus.LOADING}")
+            Log.v("result_LoadApiStatus", "${LoadApiStatus.LOADING}")
 
+            _discountsList.value = when (discountsResult) {
 
-//            _discountsList.value = when (discountsResult) {
-//                is Result.Success -> {
-//                    _error.value = null
-//                    if (isInitial) _status.value = LoadApiStatus.DONE
-//                    discountsResult.data
-//                }
-//                is Result.Fail -> {
-//                    _error.value = discountsResult.error
-//                    if (isInitial) _status.value = LoadApiStatus.ERROR
-//                    null
-//                }
-//                is Result.Error -> {
-//                    _error.value = discountsResult.exception.toString()
-//                    if (isInitial) _status.value = LoadApiStatus.ERROR
-//                    null
-//                }
-//                else -> {
-//                    _error.value = getString(R.string.you_know_nothing)
-//                    if (isInitial) _status.value = LoadApiStatus.ERROR
-//                    null
-//                }
-//            }
-//            _refreshStatus.value = false
+                is Result.Success -> {
+                    _error.value = null
+                    if (isInitial) _status.value = LoadApiStatus.DONE
+                    discountsResult.data
+
+                }
+                is Result.Fail -> {
+                    _error.value = discountsResult.error
+                    if (isInitial) _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                is Result.Error -> {
+                    _error.value = discountsResult.exception.toString()
+                    if (isInitial) _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                else -> {
+                    _error.value = getString(R.string.you_know_nothing)
+                    if (isInitial) _status.value = LoadApiStatus.ERROR
+                    null
+                }
+            }
+            _refreshStatus.value = false
+
         }
 
    }
+
+    fun dispalyPavilionDetail(dataAll: DataAll) {
+        _navigateToSelectedProperty.value = dataAll
+    }
+
+
+
 
 }
 //    private fun getAnimal(isInitial: Boolean = false) {

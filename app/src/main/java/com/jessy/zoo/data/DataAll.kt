@@ -1,6 +1,9 @@
 package com.jessy.zoo.data
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.TypeConverters
+import com.jessy.zoo.util.ServiceLocator
 import kotlinx.parcelize.Parcelize
 
 
