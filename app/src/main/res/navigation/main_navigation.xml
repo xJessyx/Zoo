@@ -9,14 +9,24 @@
         android:id="@+id/homeFragment"
         android:name="com.jessy.zoo.home.HomeFragment"
         android:label="HomeFragment" >
-        <action
-            android:id="@+id/action_homeFragment_to_introductionFragment"
-            app:destination="@id/introductionFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/introductionFragment"
         android:name="com.jessy.zoo.IntroductionFragment"
         android:label="fragment_introduction"
-        tools:layout="@layout/fragment_introduction" />
+        tools:layout="@layout/fragment_introduction" >
+
+        <argument android:name="pavilionKey"
+            app:argType="com.jessy.zoo.data.ResultX"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+
+    </fragment>
+
+    <action android:id="@+id/navigate_to_introduction_fragment"
+        app:destination="@id/introductionFragment"
+        app:popUpTo="@id/main_navigation"
+        app:popUpToInclusive="true" />
 
 </navigation>

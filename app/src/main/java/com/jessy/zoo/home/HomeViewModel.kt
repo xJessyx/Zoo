@@ -20,13 +20,15 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
 
     var pavilionList = mutableListOf<ResultX>()
 
-    // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
 
-    // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    // status: The internal MutableLiveData that stores the status of the most recent request
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
     private val _status = MutableLiveData<LoadApiStatus>()
 
     val status: LiveData<LoadApiStatus>
@@ -37,7 +39,6 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
         get() = _discountsList
 
     private val _error = MutableLiveData<String>()
-
     val error: LiveData<String>
         get() = _error
 
@@ -46,9 +47,9 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
     val refreshStatus: LiveData<Boolean>
         get() = _refreshStatus
 
-    private val _navigateToSelectedProperty = MutableLiveData<ResultX>()
-    val navigateToSelectedProperty: MutableLiveData<ResultX>
-        get() = _navigateToSelectedProperty
+    private val _navigateToIntroduction = MutableLiveData<ResultX>()
+    val navigateToIntroduction: MutableLiveData<ResultX>
+        get() = _navigateToIntroduction
 
     init {
         getZoo()
@@ -59,11 +60,7 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
         coroutineScope.launch {
 
             if (isInitial) _status.value = LoadApiStatus.LOADING
-//            var listResult = ZooApi.retrofitService.getZoo()
             val discountsResult = publisherRepository.getZoo()
-            Log.v("result_discountsResult", "${discountsResult.toString()}")
-//            Log.v("result", "${discountsResult.error}")
-            Log.v("result_LoadApiStatus", "${LoadApiStatus.LOADING}")
 
             _discountsList.value = when (discountsResult) {
 
@@ -96,18 +93,23 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
    }
 
     fun dispalyPavilionDetail(resultX: ResultX) {
-        _navigateToSelectedProperty.value = resultX
+        _navigateToIntroduction.value = resultX
+    }
+
+    fun onDetailNavigated() {
+        _navigateToIntroduction.value = null
     }
 
     fun addDiscountsData(data: ZooResult) {
 
-        for (hot in data.discounts?.results!!) {
-            pavilionList.add(hot)
 
+       data.discounts?.results?.let{
+            for (hot in data.discounts.results) {
+                pavilionList.add(hot)
+
+            }
         }
-        Log.v("pavilionList","$pavilionList")
     }
-
 
 }
 //    private fun getAnimal(isInitial: Boolean = false) {
@@ -123,5 +125,3 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
 //        }
 //  }
 
-
-//}

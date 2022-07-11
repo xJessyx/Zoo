@@ -9,7 +9,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.jessy.zoo.MainNavigationDirections
 import com.jessy.zoo.R
 import com.jessy.zoo.databinding.FragmentHomeBinding
 import com.jessy.zoo.ext.getVmFactory
@@ -47,11 +49,18 @@ class HomeFragment : Fragment(){
             }
         )
 
-//        binding.button2.setOnClickListener {
-//            this.findNavController()
-//                .navigate(HomeFragmentDirections.actionHomeFragmentToIntroductionFragment())
-//
-//        }
+        viewModel.navigateToIntroduction.observe(
+            viewLifecycleOwner,
+            Observer {
+                it?.let {
+                    findNavController().navigate(MainNavigationDirections.navigateToIntroductionFragment(it))
+                    Log.v("itnava","$it")
+                    viewModel.onDetailNavigated()
+
+                }
+            }
+        )
+
         return binding.root
     }
 
