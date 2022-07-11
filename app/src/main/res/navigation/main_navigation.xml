@@ -13,15 +13,14 @@
     </fragment>
     <fragment
         android:id="@+id/introductionFragment"
-        android:name="com.jessy.zoo.IntroductionFragment"
+        android:name="com.jessy.zoo.introduction.IntroductionFragment"
         android:label="fragment_introduction"
         tools:layout="@layout/fragment_introduction" >
 
         <argument android:name="pavilionKey"
             app:argType="com.jessy.zoo.data.ResultX"
-            app:nullable="true"
-            android:defaultValue="@null"/>
-
+            app:nullable="false"
+          />
     </fragment>
 
     <action android:id="@+id/navigate_to_introduction_fragment"

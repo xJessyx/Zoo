@@ -1,14 +1,12 @@
 package com.jessy.zoo.home
 
-import android.app.Application
+
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jessy.zoo.R
 import com.jessy.zoo.network.LoadApiStatus
-import com.jessy.zoo.network.ZooApi
 import com.jessy.zoo.data.*
 import com.jessy.zoo.data.source.PublisherRepository
 import com.jessy.zoo.util.Util.getString
@@ -30,7 +28,6 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
     }
 
     private val _status = MutableLiveData<LoadApiStatus>()
-
     val status: LiveData<LoadApiStatus>
         get() = _status
 
@@ -43,7 +40,6 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
         get() = _error
 
     private val _refreshStatus = MutableLiveData<Boolean>()
-
     val refreshStatus: LiveData<Boolean>
         get() = _refreshStatus
 
@@ -52,7 +48,7 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
         get() = _navigateToIntroduction
 
     init {
-        getZoo()
+        getZoo(true)
         // getAnimal()
     }
 
@@ -111,6 +107,11 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
         }
     }
 
+    fun refresh() {
+        if (status.value != LoadApiStatus.LOADING) {
+            getZoo()
+        }
+    }
 }
 //    private fun getAnimal(isInitial: Boolean = false) {
 //        coroutineScope.launch {

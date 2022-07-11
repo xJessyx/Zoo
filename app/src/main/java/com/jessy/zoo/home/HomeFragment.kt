@@ -54,13 +54,14 @@ class HomeFragment : Fragment(){
             Observer {
                 it?.let {
                     findNavController().navigate(MainNavigationDirections.navigateToIntroductionFragment(it))
-                    Log.v("itnava","$it")
                     viewModel.onDetailNavigated()
 
                 }
             }
         )
-
+        binding.layoutSwipeRefreshHome.setOnRefreshListener {
+            viewModel.refresh()
+        }
         return binding.root
     }
 
