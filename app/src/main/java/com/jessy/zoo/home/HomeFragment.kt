@@ -1,7 +1,5 @@
 package com.jessy.zoo.home
 
-import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,12 +8,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.jessy.zoo.R
 import com.jessy.zoo.databinding.FragmentHomeBinding
 import com.jessy.zoo.ext.getVmFactory
-import androidx.lifecycle.Observer
 
 
 class HomeFragment : Fragment(){
@@ -36,12 +33,16 @@ class HomeFragment : Fragment(){
             viewModel.dispalyPavilionDetail(it)
         })
         binding.recyclerHome.adapter = adapter
-
+        binding.recyclerHome.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         viewModel.discountsList.observe(
             viewLifecycleOwner,
             Observer {
                 it?.let {
-//                    adapter.submitList(it.discounts)
+
+                    viewModel.addDiscountsData(it)
+                    Log.v("it","$it")
+                  adapter.submitList(viewModel.pavilionList)
+
                 }
             }
         )

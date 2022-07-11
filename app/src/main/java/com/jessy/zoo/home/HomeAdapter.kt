@@ -5,16 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.jessy.zoo.data.DataAll
+import com.jessy.zoo.data.ResultX
 import com.jessy.zoo.databinding.ItemHomeBinding
 
 class HomeAdapter(private val onClickListener: OnClickListener) :
-    ListAdapter<DataAll, HomeAdapter.HomeViewHolder>(DiffCallback){
+    ListAdapter<ResultX, HomeAdapter.HomeViewHolder>(DiffCallback){
 
     class HomeViewHolder(private var binding: ItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(dataAll: DataAll) {
-            binding.dataAll = dataAll
+        fun bind(resultX: ResultX) {
+            binding.resultX = resultX
             binding.executePendingBindings()
         }
     }
@@ -31,17 +31,17 @@ class HomeAdapter(private val onClickListener: OnClickListener) :
         holder.bind(dataAll)
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<DataAll>() {
-        override fun areItemsTheSame(oldItem: DataAll, newItem: DataAll): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<ResultX>() {
+        override fun areItemsTheSame(oldItem: ResultX, newItem: ResultX): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: DataAll, newItem: DataAll): Boolean {
+        override fun areContentsTheSame(oldItem: ResultX, newItem: ResultX): Boolean {
             return oldItem == newItem
         }
     }
 
-    class OnClickListener(val clickListener: (dataAll: DataAll) -> Unit) {
-        fun onClick(dataAll: DataAll) = clickListener(dataAll)
+    class OnClickListener(val clickListener: (resultX: ResultX) -> Unit) {
+        fun onClick(resultX: ResultX) = clickListener(resultX)
     }
 }

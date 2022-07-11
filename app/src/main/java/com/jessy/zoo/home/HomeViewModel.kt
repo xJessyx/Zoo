@@ -17,6 +17,9 @@ import kotlinx.coroutines.*
 
 class HomeViewModel(private val publisherRepository: PublisherRepository): ViewModel(){
 
+
+    var pavilionList = mutableListOf<ResultX>()
+
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
 
@@ -43,8 +46,8 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
     val refreshStatus: LiveData<Boolean>
         get() = _refreshStatus
 
-    private val _navigateToSelectedProperty = MutableLiveData<DataAll>()
-    val navigateToSelectedProperty: MutableLiveData<DataAll>
+    private val _navigateToSelectedProperty = MutableLiveData<ResultX>()
+    val navigateToSelectedProperty: MutableLiveData<ResultX>
         get() = _navigateToSelectedProperty
 
     init {
@@ -92,11 +95,18 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
 
    }
 
-    fun dispalyPavilionDetail(dataAll: DataAll) {
-        _navigateToSelectedProperty.value = dataAll
+    fun dispalyPavilionDetail(resultX: ResultX) {
+        _navigateToSelectedProperty.value = resultX
     }
 
+    fun addDiscountsData(data: ZooResult) {
 
+        for (hot in data.discounts?.results!!) {
+            pavilionList.add(hot)
+
+        }
+        Log.v("pavilionList","$pavilionList")
+    }
 
 
 }

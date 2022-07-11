@@ -1,60 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <variable name="dataAll" type="com.jessy.zoo.data.DataAll"/>
+        <variable name="resultX" type="com.jessy.zoo.data.ResultX"/>
 
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/img_item_home"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@color/black"
+        app:imageUrl="@{resultX.e_pic_url}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_title_item_home"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:text="@{resultX.e_name}"
         app:layout_constraintStart_toEndOf="@+id/img_item_home"
         app:layout_constraintTop_toTopOf="@+id/img_item_home"
-        tools:text="Title.........." />
+        tools:text="兩棲爬蟲動物館" />
 
     <TextView
         android:id="@+id/tv_content_item_home"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:layout_marginBottom="3dp"
-        app:layout_constraintBottom_toBottomOf="@+id/img_item_home"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="@{resultX.e_info}"
+        app:layout_constraintBottom_toTopOf="@+id/tv_memo_item_home"
         app:layout_constraintStart_toStartOf="@+id/tv_title_item_home"
         app:layout_constraintTop_toBottomOf="@+id/tv_title_item_home"
         app:layout_constraintVertical_bias="0.0"
-        tools:text="content.........." />
+        tools:text="本館以不同的生態系展示各種兩棲爬蟲活體動物，包括濕地..." />
 
     <ImageView
         android:id="@+id/img_icon_item_home"
-        android:layout_width="30dp"
-        android:layout_height="17dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="5dp"
         android:src="@drawable/more_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tv_content_item_home"
         app:layout_constraintTop_toTopOf="@+id/tv_content_item_home" />
+
+    <TextView
+        android:id="@+id/tv_memo_item_home"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@{resultX.e_memo}"
+        app:layout_constraintBottom_toBottomOf="@+id/img_item_home"
+        app:layout_constraintStart_toStartOf="@+id/tv_content_item_home"
+        tools:text="每月第三個周日休館" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
