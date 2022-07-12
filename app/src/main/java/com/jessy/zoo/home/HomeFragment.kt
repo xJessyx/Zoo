@@ -1,7 +1,6 @@
 package com.jessy.zoo.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,7 @@ class HomeFragment : Fragment(){
         binding.viewModel = viewModel
         binding.lifecycleOwner= this
         val adapter = HomeAdapter(HomeAdapter.OnClickListener {
-            viewModel.dispalyPavilionDetail(it)
+            viewModel.displayPavilionDetail(it)
         })
         binding.recyclerHome.adapter = adapter
         binding.recyclerHome.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
@@ -42,7 +41,6 @@ class HomeFragment : Fragment(){
                 it?.let {
 
                     viewModel.addDiscountsData(it)
-                    Log.v("it","$it")
                   adapter.submitList(viewModel.pavilionList)
 
                 }

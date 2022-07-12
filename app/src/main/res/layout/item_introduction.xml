@@ -5,6 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
     <data>
+        <variable name="resultY" type="com.jessy.zoo.data.ResultY"/>
 
     </data>
 
@@ -20,6 +21,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@color/black"
+        app:imageUrl="@{resultY.A_Pic01_URL}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,6 +37,7 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:text="@{resultY.A_Name_Ch}"
         app:layout_constraintStart_toEndOf="@+id/img_item_introduction"
         app:layout_constraintTop_toTopOf="@+id/img_item_introduction"
         tools:text="兩棲爬蟲動物館" />
@@ -45,6 +48,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="2"
+        android:text="@{resultY.A_AlsoKnown}"
         app:layout_constraintBottom_toBottomOf="@+id/img_item_introduction"
         app:layout_constraintStart_toStartOf="@+id/tv_title_item_introduction"
         app:layout_constraintTop_toBottomOf="@+id/tv_title_item_introduction"

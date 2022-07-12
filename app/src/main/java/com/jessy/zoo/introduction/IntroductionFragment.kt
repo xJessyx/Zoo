@@ -2,19 +2,19 @@ package com.jessy.zoo.introduction
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.Html
-import android.text.method.LinkMovementMethod
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.jessy.zoo.MainActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.jessy.zoo.MainNavigationDirections
 import com.jessy.zoo.databinding.FragmentIntroductionBinding
 import com.jessy.zoo.ext.getVmFactory
+import com.jessy.zoo.home.HomeAdapter
 
 class IntroductionFragment : Fragment() {
 
@@ -29,22 +29,44 @@ class IntroductionFragment : Fragment() {
         val binding = FragmentIntroductionBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        val adapter = IntroductionAdapter(IntroductionAdapter.OnClickListener {
+            viewModel.displayAnimalDetail(it)
+        })
+        binding.recyclerIntroduction.adapter = adapter
+        binding.recyclerIntroduction.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+        viewModel.introductionList.observe(
+            viewLifecycleOwner,
+            Observer {
+                it?.let {
 
+                    viewModel.addAnimalData(it)
+                    Log.v("animalList","${viewModel.animalList}")
+                    adapter.submitList(viewModel.animalList)
+
+                }
+            }
+        )
         binding.imgToolbarIntroduction.setOnClickListener {
             this.findNavController().navigateUp()
 
         }
 
-        binding.button.setOnClickListener {
-            findNavController().navigate(MainNavigationDirections.navigateToAnimalFragment())
-        }
-//        binding.tvHrefIntroduction.setText(Html.fromHtml("在網頁開啟<a href=${viewModel.resultX.value?.e_url}</a>"))
-//        Log.v("a","${viewModel.resultX.value?.e_url}")
         binding.tvHrefIntroduction.text = "在網頁開啟 ${viewModel.resultX.value?.e_url}"
 
-        return binding.root
-    }
+        viewModel.navigateToAnimal.observe(
+            viewLifecycleOwner,
+            Observer {
+                it?.let {
+                    findNavController().navigate(MainNavigationDirections.navigateToAnimalFragment(it))
+                    viewModel.onDetailNavigated()
 
+                }
+            }
+        )
+
+        return binding.root
+
+    }
 
 
 }

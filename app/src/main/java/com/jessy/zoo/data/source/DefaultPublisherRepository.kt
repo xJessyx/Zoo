@@ -13,7 +13,10 @@ class DefaultPublisherRepository(
 ) : PublisherRepository {
 
     override suspend fun getZoo(): Result<ZooResult> {
-
         return publisherRemoteDataSource.getZoo()
+    }
+
+    override suspend fun getAnimal(): Result<AnimalResult> {
+        return publisherRemoteDataSource.getAnimal()
     }
 }

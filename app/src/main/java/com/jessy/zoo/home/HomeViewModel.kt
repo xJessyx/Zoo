@@ -9,6 +9,7 @@ import com.jessy.zoo.R
 import com.jessy.zoo.network.LoadApiStatus
 import com.jessy.zoo.data.*
 import com.jessy.zoo.data.source.PublisherRepository
+import com.jessy.zoo.network.ZooApi
 import com.jessy.zoo.util.Util.getString
 import kotlinx.coroutines.*
 
@@ -19,13 +20,8 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
     var pavilionList = mutableListOf<ResultX>()
 
     private var viewModelJob = Job()
-
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
 
     private val _status = MutableLiveData<LoadApiStatus>()
     val status: LiveData<LoadApiStatus>
@@ -49,7 +45,12 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
 
     init {
         getZoo(true)
-        // getAnimal()
+    }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 
     private fun getZoo(isInitial: Boolean = false) {
@@ -57,7 +58,6 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
 
             if (isInitial) _status.value = LoadApiStatus.LOADING
             val discountsResult = publisherRepository.getZoo()
-
             _discountsList.value = when (discountsResult) {
 
                 is Result.Success -> {
@@ -88,7 +88,7 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
 
    }
 
-    fun dispalyPavilionDetail(resultX: ResultX) {
+    fun displayPavilionDetail(resultX: ResultX) {
         _navigateToIntroduction.value = resultX
     }
 
@@ -97,7 +97,6 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
     }
 
     fun addDiscountsData(data: ZooResult) {
-
 
        data.discounts?.results?.let{
             for (hot in data.discounts.results) {
@@ -113,16 +112,5 @@ class HomeViewModel(private val publisherRepository: PublisherRepository): ViewM
         }
     }
 }
-//    private fun getAnimal(isInitial: Boolean = false) {
-//        coroutineScope.launch {
-//
-//            if (isInitial) _status.value = LoadApiStatus.LOADING
-//            var listResult = ZooApi.retrofitService.getAnimal()
-//
-//            Log.v("result", "${listResult.discounts?.results}")
-//            Log.v("result", "${listResult.error}")
-//            Log.v("result", "${LoadApiStatus.LOADING}")
-//
-//        }
-//  }
+
 

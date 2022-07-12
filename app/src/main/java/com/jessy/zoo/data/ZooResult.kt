@@ -8,6 +8,5 @@ import kotlinx.android.parcel.Parcelize
 data class ZooResult(
     val error: String? = null,
     @Json(name = "result") val discounts: DataAll? = null
-   //  val data: List<DataAll>
 ) : Parcelable
 

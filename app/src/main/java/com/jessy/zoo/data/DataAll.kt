@@ -6,7 +6,6 @@ import androidx.room.TypeConverters
 import com.jessy.zoo.util.ServiceLocator
 import kotlinx.parcelize.Parcelize
 
-
 @Parcelize
 data class DataAll(
     val count: Int = 0,

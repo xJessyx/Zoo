@@ -22,10 +22,17 @@
             app:nullable="false"
           />
     </fragment>
+
     <fragment
         android:id="@+id/animalFragment"
         android:name="com.jessy.zoo.animal.AnimalFragment"
-        android:label="AnimalFragment" />
+        android:label="AnimalFragment" >
+
+        <argument android:name="animalKey"
+            app:argType="com.jessy.zoo.data.ResultY"
+            app:nullable="false"
+            />
+    </fragment>
 
     <action android:id="@+id/navigate_to_introduction_fragment"
         app:destination="@id/introductionFragment"

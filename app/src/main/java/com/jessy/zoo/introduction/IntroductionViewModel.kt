@@ -1,92 +1,116 @@
 package com.jessy.zoo.introduction
 
-import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.jessy.zoo.ZooApplication
-import com.jessy.zoo.data.ResultX
+import com.jessy.zoo.R
+import com.jessy.zoo.data.*
 import com.jessy.zoo.data.source.PublisherRepository
-import com.jessy.zoo.network.AnimalApi
+import com.jessy.zoo.network.LoadApiStatus
+import com.jessy.zoo.util.Util
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import okhttp3.ResponseBody
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
 
 class IntroductionViewModel(
     private val publisherRepository: PublisherRepository,
     private val arguments: ResultX,
 ) : ViewModel() {
+
+    var animalList = mutableListOf<ResultY>()
+
     private val _resultX = MutableLiveData<ResultX>().apply {
         value = arguments
     }
     val resultX: LiveData<ResultX>
         get() = _resultX
 
-    //    private val url = "file/d/18xJmRLYnq2I953FqXb_40oTkkyHnOFEU/view?usp=sharing"
-//    private val url = "https: /drive.google.com/file/d/ 18xJmRLYnq2I953FqXb_40oTkkyHnOFEU/view? usp=sharing\n"
+    private var viewModelJob = Job()
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+    private val _status = MutableLiveData<LoadApiStatus>()
+    val status: LiveData<LoadApiStatus>
+        get() = _status
+
+    private val _introductionList = MutableLiveData<AnimalResult>()
+    val introductionList: LiveData<AnimalResult>
+        get() = _introductionList
+
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String>
+        get() = _error
+
+    private val _refreshStatus = MutableLiveData<Boolean>()
+    val refreshStatus: LiveData<Boolean>
+        get() = _refreshStatus
 
 
-    private val url = "https://drive.google.com/file/d/18xJmRLYnq2I953FqXb_40oTkkyHnOFEU/view"
+    private val _navigateToAnimal = MutableLiveData<ResultY>()
+    val navigateToAnimal: MutableLiveData<ResultY>
+        get() = _navigateToAnimal
 
-    private val fileName = url.substring(url.lastIndexOf("/") + 1)
-    val context = ZooApplication.instance
-    private val pathWhereYouWantToSaveFile = context.filesDir.absolutePath + fileName
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
 
     init {
-        // getAnimal()
-        downloadFile()
+        getAnimal()
     }
 
+    private fun getAnimal(isInitial: Boolean = false) {
+        coroutineScope.launch {
 
-    //    private fun getAnimal() {
-//        viewModelScope.launch {
-//            val apiResult = AnimalApi.animalRetrofitService.getAnimal()
-//            Log.v("apiResult","$apiResult")
-//
-//        }
-//    }
-    private fun downloadFile() {
-        viewModelScope.launch {
-            val responseBody = AnimalApi.animalRetrofitService.downloadFile(url).body()
+            val introductionResult = publisherRepository.getAnimal()
 
-            saveFile(responseBody, pathWhereYouWantToSaveFile)
-            Log.v("pathWhereYouWantToSaveFile", "${pathWhereYouWantToSaveFile.toString()}")
+            _introductionList.value = when (introductionResult) {
 
-        }
-
-    }
-
-    fun saveFile(body: ResponseBody?, pathWhereYouWantToSaveFile: String): String {
-        if (body == null)
-            return ""
-        var input: InputStream? = null
-
-        try {
-
-            input = body.byteStream()
-            Log.v("input", "${input.toString()}")
-            //val file = File(getCacheDir(), "cacheFileAppeal.srl")
-            val fos = FileOutputStream(pathWhereYouWantToSaveFile)
-            fos.use { output ->
-                val buffer = ByteArray(4 * 1024) // or other buffer size
-                var read: Int
-                while (input.read(buffer).also { read = it } != -1) {
-                    output.write(buffer, 0, read)
+                is Result.Success -> {
+                    _error.value = null
+                    if (isInitial) _status.value = LoadApiStatus.DONE
+                    introductionResult.data
                 }
-                output.flush()
+                is Result.Fail -> {
+                    _error.value = introductionResult.error
+                    if (isInitial) _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                is Result.Error -> {
+                    _error.value = introductionResult.exception.toString()
+                    if (isInitial) _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                else -> {
+                    _error.value = Util.getString(R.string.you_know_nothing)
+                    if (isInitial) _status.value = LoadApiStatus.ERROR
+                    null
+                }
             }
-            return pathWhereYouWantToSaveFile
+            _refreshStatus.value = false
 
-        } catch (e: Exception) {
-            Log.e("saveFile", e.toString())
-        } finally {
-            input?.close()
         }
-        return ""
     }
 
+    fun displayAnimalDetail(resultY: ResultY) {
+        _navigateToAnimal.value = resultY
+    }
+
+    fun onDetailNavigated() {
+        _navigateToAnimal.value = null
+    }
+
+    fun addAnimalData(data: AnimalResult) {
+        data.discounts?.results?.let{
+            for (hot in data.discounts.results) {
+//                if(hot.A_Location == resultX.value?.e_name){
+//                    animalList.add(hot)
+//                }
+//                Log.v("hot.A_Location == resultX.value?.e_name","hot.A_Location = ${hot.A_Location} == ${resultX.value?.e_name}")
+
+                animalList.add(hot)
+            }
+        }
+    }
 }

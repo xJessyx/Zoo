@@ -2,16 +2,18 @@ package com.jessy.zoo.data.source.local
 
 import android.content.Context
 import com.jessy.zoo.R
+import com.jessy.zoo.data.AnimalResult
 import com.jessy.zoo.data.Result
 import com.jessy.zoo.data.ZooResult
 import com.jessy.zoo.data.source.PublisherDataSource
+import com.jessy.zoo.network.AnimalApi
 import com.jessy.zoo.network.ZooApi
 import com.jessy.zoo.util.Util.getString
 import com.jessy.zoo.util.Util.isInternetConnected
 
 class PublisherLocalDataSource(val context: Context) : PublisherDataSource {
 
-        override suspend fun getZoo(): Result<ZooResult> {
+    override suspend fun getZoo(): Result<ZooResult> {
         if (!isInternetConnected()) {
             return Result.Fail(getString(R.string.internet_not_connected))
 
@@ -29,7 +31,23 @@ class PublisherLocalDataSource(val context: Context) : PublisherDataSource {
             Result.Error(e)
         }
     }
-//    override suspend fun getZoo(): Result<ZooResult> {
-//        TODO("not implemented")
-//    }
+
+    override suspend fun getAnimal(): Result<AnimalResult> {
+        if (!isInternetConnected()) {
+            return Result.Fail(getString(R.string.internet_not_connected))
+
+        }
+
+        return try {
+
+            val animalResult = AnimalApi.animalRetrofitService.getAnimal()
+            animalResult.error?.let {
+                return Result.Fail(it)
+            }
+            Result.Success(animalResult)
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
 }
