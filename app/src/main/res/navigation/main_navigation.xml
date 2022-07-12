@@ -25,7 +25,6 @@
 
     <action android:id="@+id/navigate_to_introduction_fragment"
         app:destination="@id/introductionFragment"
-        app:popUpTo="@id/main_navigation"
         app:popUpToInclusive="true" />
 
 </navigation>

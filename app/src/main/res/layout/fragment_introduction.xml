@@ -121,8 +121,9 @@
                     android:id="@+id/tv_href_introduction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/href"
                     android:textColor="@color/blue"
+                    android:autoLink="all"
+                    tools:text="在網頁開啟"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_category_introduction"
                     app:layout_constraintEnd_toEndOf="@+id/tv_info_introduction"
                     app:layout_constraintTop_toTopOf="@+id/tv_category_introduction" />
