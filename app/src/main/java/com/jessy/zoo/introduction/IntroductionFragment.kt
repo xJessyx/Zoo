@@ -1,5 +1,6 @@
 package com.jessy.zoo.introduction
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.jessy.zoo.MainActivity
+import com.jessy.zoo.MainNavigationDirections
 import com.jessy.zoo.databinding.FragmentIntroductionBinding
 import com.jessy.zoo.ext.getVmFactory
 
@@ -19,6 +21,7 @@ class IntroductionFragment : Fragment() {
     private val viewModel by viewModels<IntroductionViewModel> {
         getVmFactory(IntroductionFragmentArgs.fromBundle(requireArguments()).pavilionKey) }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -31,11 +34,17 @@ class IntroductionFragment : Fragment() {
             this.findNavController().navigateUp()
 
         }
+
+        binding.button.setOnClickListener {
+            findNavController().navigate(MainNavigationDirections.navigateToAnimalFragment())
+        }
 //        binding.tvHrefIntroduction.setText(Html.fromHtml("在網頁開啟<a href=${viewModel.resultX.value?.e_url}</a>"))
 //        Log.v("a","${viewModel.resultX.value?.e_url}")
-        binding.tvHrefIntroduction.setText("在網頁開啟 ${viewModel.resultX.value?.e_url}")
+        binding.tvHrefIntroduction.text = "在網頁開啟 ${viewModel.resultX.value?.e_url}"
 
         return binding.root
     }
+
+
 
 }

@@ -22,9 +22,17 @@
             app:nullable="false"
           />
     </fragment>
+    <fragment
+        android:id="@+id/animalFragment"
+        android:name="com.jessy.zoo.animal.AnimalFragment"
+        android:label="AnimalFragment" />
 
     <action android:id="@+id/navigate_to_introduction_fragment"
         app:destination="@id/introductionFragment"
+        app:popUpToInclusive="true" />
+
+    <action android:id="@+id/navigate_to_animal_fragment"
+        app:destination="@id/animalFragment"
         app:popUpToInclusive="true" />
 
 </navigation>

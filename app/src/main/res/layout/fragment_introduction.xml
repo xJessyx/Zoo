@@ -121,12 +121,13 @@
                     android:id="@+id/tv_href_introduction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/blue"
                     android:autoLink="all"
-                    tools:text="在網頁開啟"
+                    android:textColor="@color/blue"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_category_introduction"
                     app:layout_constraintEnd_toEndOf="@+id/tv_info_introduction"
-                    app:layout_constraintTop_toTopOf="@+id/tv_category_introduction" />
+                    app:layout_constraintTop_toTopOf="@+id/tv_category_introduction"
+                    tools:text="在網頁開啟" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -164,9 +165,18 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
                 </androidx.recyclerview.widget.RecyclerView>
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Button"
+                    tools:layout_editor_absoluteX="175dp"
+                    tools:layout_editor_absoluteY="174dp" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </androidx.core.widget.NestedScrollView>
 
 </layout>

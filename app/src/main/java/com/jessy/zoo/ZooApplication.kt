@@ -7,7 +7,6 @@ import kotlin.properties.Delegates
 
 class ZooApplication : Application() {
 
-    // Depends on the flavor,
     val publisherRepository: PublisherRepository
         get() = ServiceLocator.provideTasksRepository(this)
 
