@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.jessy.zoo.R
 import com.jessy.zoo.data.*
 import com.jessy.zoo.data.source.PublisherRepository
+import com.jessy.zoo.network.AnimalApi
 import com.jessy.zoo.network.LoadApiStatus
 import com.jessy.zoo.util.Util
 import kotlinx.coroutines.CoroutineScope
@@ -61,8 +62,11 @@ class IntroductionViewModel(
 
     private fun getAnimal(isInitial: Boolean = false) {
         coroutineScope.launch {
+            val introductionResult2 = AnimalApi.animalRetrofitService.getAnimal()
+            Log.v("introductionResult2","${introductionResult2.toString()}")
 
             val introductionResult = publisherRepository.getAnimal()
+            Log.v("introductionResult","${introductionResult.toString()}")
 
             _introductionList.value = when (introductionResult) {
 
@@ -103,12 +107,10 @@ class IntroductionViewModel(
     fun addAnimalData(data: AnimalResult) {
         data.discounts?.results?.let{
             for (hot in data.discounts.results) {
-//                if(hot.A_Location == resultX.value?.e_name){
-//                    animalList.add(hot)
-//                }
-//                Log.v("hot.A_Location == resultX.value?.e_name","hot.A_Location = ${hot.A_Location} == ${resultX.value?.e_name}")
+                if(hot.A_Location == resultX.value?.e_name){
+                    animalList.add(hot)
 
-                animalList.add(hot)
+                }
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.jessy.zoo.data.source.remote
 
-import android.util.Log
 import com.jessy.zoo.R
 import com.jessy.zoo.data.AnimalResult
 import com.jessy.zoo.data.Result
@@ -8,7 +7,6 @@ import com.jessy.zoo.data.ZooResult
 import com.jessy.zoo.data.source.PublisherDataSource
 import com.jessy.zoo.network.AnimalApi
 import com.jessy.zoo.network.ZooApi
-import com.jessy.zoo.util.Logger
 import com.jessy.zoo.util.Util.getString
 import com.jessy.zoo.util.Util.isInternetConnected
 
@@ -45,6 +43,7 @@ object PublisherRemoteDataSource : PublisherDataSource {
             val animalResult = AnimalApi.animalRetrofitService.getAnimal()
             animalResult.error?.let {
                 return Result.Fail(it)
+
             }
             Result.Success(animalResult)
         } catch (e: Exception) {

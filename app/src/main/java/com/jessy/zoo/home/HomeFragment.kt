@@ -19,22 +19,25 @@ import com.jessy.zoo.ext.getVmFactory
 class HomeFragment : Fragment(){
 
     private val viewModel by viewModels<HomeViewModel> { getVmFactory() }
-    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
 
-        binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_home, container, false)
+        val binding = FragmentHomeBinding.inflate(inflater, container, false)
+
         binding.viewModel = viewModel
-        binding.lifecycleOwner= this
+        binding.lifecycleOwner= viewLifecycleOwner
         val adapter = HomeAdapter(HomeAdapter.OnClickListener {
             viewModel.displayPavilionDetail(it)
         })
         binding.recyclerHome.adapter = adapter
         binding.recyclerHome.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+        binding.layoutSwipeRefreshHome.setOnRefreshListener {
+            viewModel.refresh()
+        }
+
         viewModel.discountsList.observe(
             viewLifecycleOwner,
             Observer {
@@ -57,9 +60,17 @@ class HomeFragment : Fragment(){
                 }
             }
         )
-        binding.layoutSwipeRefreshHome.setOnRefreshListener {
-            viewModel.refresh()
-        }
+
+        viewModel.refreshStatus.observe(
+            viewLifecycleOwner,
+            Observer {
+                it?.let {
+                    binding.layoutSwipeRefreshHome.isRefreshing = it
+                }
+            }
+        )
+
+
         return binding.root
     }
 

@@ -38,7 +38,6 @@ class IntroductionFragment : Fragment() {
             viewLifecycleOwner,
             Observer {
                 it?.let {
-
                     viewModel.addAnimalData(it)
                     Log.v("animalList","${viewModel.animalList}")
                     adapter.submitList(viewModel.animalList)

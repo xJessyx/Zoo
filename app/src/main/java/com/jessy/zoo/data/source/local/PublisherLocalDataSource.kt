@@ -1,6 +1,7 @@
 package com.jessy.zoo.data.source.local
 
 import android.content.Context
+import android.util.Log
 import com.jessy.zoo.R
 import com.jessy.zoo.data.AnimalResult
 import com.jessy.zoo.data.Result
@@ -41,6 +42,7 @@ class PublisherLocalDataSource(val context: Context) : PublisherDataSource {
         return try {
 
             val animalResult = AnimalApi.animalRetrofitService.getAnimal()
+
             animalResult.error?.let {
                 return Result.Fail(it)
             }

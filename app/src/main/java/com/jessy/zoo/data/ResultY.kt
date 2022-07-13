@@ -53,4 +53,3 @@ data class ResultY(
     val _id: Int = 0,
     val A_Name_Ch: String = ""
 ): Parcelable
-
