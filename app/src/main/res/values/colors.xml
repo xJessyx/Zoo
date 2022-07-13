@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+<<<<<<< HEAD
+=======
+    <color name="gray">#dcdcdc</color>
+    <color name="black_3f3a3a">#3f3a3a</color>
+    <color name="blue">#2894FF</color>
+
+>>>>>>> develop
 </resources>

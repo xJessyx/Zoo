@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.jessy.zoo.animal.AnimalViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            tools:context=".animal.AnimalFragment">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_animal"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white"
+                android:backgroundTint="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/img_toolbar_animal"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:src="@drawable/left_back_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_toolbar_animal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:text="@{viewModel.resultY.a_Name_Ch}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/img_toolbar_animal"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="大貓熊" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <ImageView
+                android:id="@+id/img_animal"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:src="@color/blue"
+                imageUrl="@{viewModel.resultY.a_Pic01_URL}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_animal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_animal">
+
+                <TextView
+                    android:id="@+id/tv_name_animal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    tools:text="大貓熊" />
+
+                <TextView
+                    android:id="@+id/tv_name_latin_animal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.resultY.a_Name_En}"
+                    tools:text="Arthropod melanoma" />
+
+                <TextView
+                    android:id="@+id/tv_alsoKnown_field_animal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/alsoKnown_field" />
+
+                <TextView
+                    android:id="@+id/tv_alsoKnown_animal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.resultY.a_AlsoKnown}"
+
+                    tools:text="貓熊、熊貓" />
+
+                <TextView
+                    android:id="@+id/tv_distribution_field_animal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/distribution_field" />
+
+                <TextView
+                    android:id="@+id/tv_distribution_animal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.resultY.a_Distribution}"
+                    tools:text="目前僅存於中國四川、甘肅和陜西三省境內。" />
+
+                <TextView
+                    android:id="@+id/tv_feature_field_animal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/feature_field" />
+
+                <TextView
+                    android:id="@+id/tv_feature_animal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.resultY.a_Feature}"
+                    tools:text="1. 成熊身長約為120-180公分，體重約80-120公斤，幼熊出生時體長約10公分，體重約僅有150~200公克。\r\n 2. 具有強壯有力的四肢：後腳內八字撇，有利於在密林中走動時撥開竹子。\r\n 3. 腕骨特化成的偽拇指(不具備關節)，使得牠們能俐落地取食竹子。\r\n 4. 掌心覆有毛，使得大貓熊能夠在寒冷的雪地上行走。\r\n 5.大貓熊身體顏色主要為黑白兩色。耳朵、眼斑、鼻頭、肩背部和四肢為黑色，其餘部位為白色。相對比例較小的黑色耳朵有減少熱量散失的功能。" />
+
+                <TextView
+                    android:id="@+id/tv_behavior_field_animal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/behavior_field" />
+
+                <TextView
+                    android:id="@+id/tv_behavior_animal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.resultY.a_Behavior}"
+                    tools:text="1.獨居的動物，除了交配季節或雌性的育幼時期，牠們都是獨自居住的。\r\n  2.最活躍的時間在早晨和黃昏，但竹子所含熱量低，為減少能量的消耗，牠們每天的睡眠時間約10小時，剩餘時間則大多在覓食和進食。" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="32dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_update_field_animal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/update_field" />
+
+                    <TextView
+                        android:id="@+id/tv_update_animal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.resultY.a_Update}"
+                        tools:text="2017/9/4" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</layout>
+
