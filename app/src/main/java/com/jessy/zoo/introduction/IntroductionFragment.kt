@@ -57,6 +57,7 @@ class IntroductionFragment : Fragment() {
             viewLifecycleOwner,
             Observer {
                 it?.let {
+                    Log.v("it","$it")
                     findNavController().navigate(MainNavigationDirections.navigateToAnimalFragment(it))
                     viewModel.onDetailNavigated()
 

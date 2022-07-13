@@ -5,6 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="viewModel"
+            type="com.jessy.zoo.animal.AnimalViewModel" />
 
     </data>
 
@@ -49,6 +52,7 @@
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold"
+                        android:text="@{viewModel.resultY.a_Name_Ch}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/img_toolbar_animal"
                         app:layout_constraintTop_toTopOf="parent"
@@ -63,6 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:src="@color/blue"
+                imageUrl="@{viewModel.resultY.a_Pic01_ALT}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar_animal" />
@@ -89,6 +94,7 @@
                     android:id="@+id/tv_name_latin_animal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{viewModel.resultY.a_Name_En}"
                     tools:text="Arthropod melanoma" />
 
                 <TextView
@@ -102,6 +108,8 @@
                     android:id="@+id/tv_alsoKnown_animal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{viewModel.resultY.a_AlsoKnown}"
+
                     tools:text="貓熊、熊貓" />
 
                 <TextView
@@ -115,6 +123,7 @@
                     android:id="@+id/tv_distribution_animal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{viewModel.resultY.a_Distribution}"
                     tools:text="目前僅存於中國四川、甘肅和陜西三省境內。" />
 
                 <TextView
@@ -128,6 +137,7 @@
                     android:id="@+id/tv_feature_animal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{viewModel.resultY.a_Feature}"
                     tools:text="1. 成熊身長約為120-180公分，體重約80-120公斤，幼熊出生時體長約10公分，體重約僅有150~200公克。\r\n 2. 具有強壯有力的四肢：後腳內八字撇，有利於在密林中走動時撥開竹子。\r\n 3. 腕骨特化成的偽拇指(不具備關節)，使得牠們能俐落地取食竹子。\r\n 4. 掌心覆有毛，使得大貓熊能夠在寒冷的雪地上行走。\r\n 5.大貓熊身體顏色主要為黑白兩色。耳朵、眼斑、鼻頭、肩背部和四肢為黑色，其餘部位為白色。相對比例較小的黑色耳朵有減少熱量散失的功能。" />
 
                 <TextView
@@ -141,6 +151,7 @@
                     android:id="@+id/tv_behavior_animal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{viewModel.resultY.a_Behavior}"
                     tools:text="1.獨居的動物，除了交配季節或雌性的育幼時期，牠們都是獨自居住的。\r\n  2.最活躍的時間在早晨和黃昏，但竹子所含熱量低，為減少能量的消耗，牠們每天的睡眠時間約10小時，剩餘時間則大多在覓食和進食。" />
 
                 <LinearLayout
@@ -160,6 +171,7 @@
                         android:id="@+id/tv_update_animal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@{viewModel.resultY.a_Update}"
                         tools:text="2017/9/4" />
                 </LinearLayout>
             </LinearLayout>
