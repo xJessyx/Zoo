@@ -43,9 +43,7 @@ class IntroductionViewModel(
     val error: LiveData<String>
         get() = _error
 
-    private val _refreshStatus = MutableLiveData<Boolean>()
-    val refreshStatus: LiveData<Boolean>
-        get() = _refreshStatus
+
 
     private val _navigateToAnimal = MutableLiveData<ResultY>()
     val navigateToAnimal: MutableLiveData<ResultY>
@@ -91,7 +89,6 @@ class IntroductionViewModel(
                     null
                 }
             }
-            _refreshStatus.value = false
 
         }
     }
